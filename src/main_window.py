@@ -87,7 +87,7 @@ class main_window(QMainWindow):
             (self.width() / 2) - (self.create_new_button.width() / 2),
             self.title_label.y() + self.title_label.height() + 20,
         )
-        # self.create_new_button.clicked.connect(self.create_new_button_clicked)
+        self.create_new_button.clicked.connect(self.create_new_button_clicked)
 
         self.load_button = QPushButton("Load", self)
         self.load_button.setFont(QFont("Arial", 12))
@@ -98,6 +98,9 @@ class main_window(QMainWindow):
             self.create_new_button.y() + self.create_new_button.height() + 20,
         )
         self.load_button.clicked.connect(self.load_button_clicked)
+
+    def create_new_button_clicked(self):
+        ...
 
     def load_button_clicked(self):
         file_name, _ = QFileDialog.getOpenFileName(
