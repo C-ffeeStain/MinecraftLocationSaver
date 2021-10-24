@@ -13,6 +13,8 @@ from PyQt5.QtWidgets import (
     QPushButton,
 )
 
+from editor_window import editor_window
+
 
 class main_window(QMainWindow):
     def __init__(self):
@@ -37,11 +39,11 @@ class main_window(QMainWindow):
 
         system_name = system()
         if system_name == "Windows":
-            self.minecraft_dir = os.path.join(os.environ["APPDATA"], ".minecraft")
+            minecraft_dir = os.path.join(os.environ["APPDATA"], ".minecraft")
         elif system_name == "Linux":
-            self.minecraft_dir = os.path.join(os.environ["HOME"], ".minecraft")
+            minecraft_dir = os.path.join(os.environ["HOME"], ".minecraft")
         elif system_name == "Darwin":
-            self.minecraft_dir = os.path.join(
+            minecraft_dir = os.path.join(
                 os.environ["HOME"], "Library", "Application Support", "minecraft"
             )
             QMessageBox.warning(
@@ -57,7 +59,7 @@ class main_window(QMainWindow):
                 "This program has not been tested on this Operating System.\n"
                 "Please report any bugs you find.",
             )
-        if not os.path.exists(self.minecraft_dir):
+        if not os.path.exists(minecraft_dir):
             if (
                 QMessageBox.warning(
                     self,
@@ -100,7 +102,9 @@ class main_window(QMainWindow):
         self.load_button.clicked.connect(self.load_button_clicked)
 
     def create_new_button_clicked(self):
-        ...
+        self.editor_window = editor_window(main_window=self, pos=[self.x(), self.y()])
+        self.editor_window.show()
+        self.hide()
 
     def load_button_clicked(self):
         file_name, _ = QFileDialog.getOpenFileName(
